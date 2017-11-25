@@ -14,7 +14,11 @@ rpart.plot(fit)
 dev.off()
 
 testData <- read.table("/home/hasithagamage/predict_data.csv", header=TRUE, sep=",")
-
-p3 <- predict(fit, imdb[1:1,], type="class")
+str(testData)
+table(testData$isProfitable)
+h <- runif(nrow(testData))
+imdbres <- testData[order(h),]
+head(imdbres)
+p3 <- predict(fit, testData[1:1,], type="class")
 
 write.csv(p3, file = "/home/hasithagamage/predict_result.csv")

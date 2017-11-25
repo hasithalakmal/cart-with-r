@@ -41,7 +41,7 @@ public class CartServiceImpl implements CartService {
             Runtime.getRuntime().exec("Rscript /home/hasithagamage/Hasitha/OtherProjects/GIT/cart-with-r/Training.R");
         } catch (IOException e) {
         }
-        return "url";
+        return "/home/hasithagamage/decision_tree.png";
     }
 
     private void setDataLineOnCsv(StringBuilder sb, Recode recode) {
