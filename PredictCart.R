@@ -1,24 +1,10 @@
 library(rpart)
 library(rpart.plot)
 
-imdb6 <- read.table("/home/hasithagamage/cart_data.csv", header=TRUE, sep=",")
-str(imdb6)
-table(imdb6$isProfitable)
-g <- runif(nrow(imdb6))
-imdb <- imdb6[order(g),]
-head(imdb)
 
-fit <- rpart(Profit ~ Duration  + Genres + Director.Name + Actor.Name + Country + Language + BudgetID, method="class", data=imdb6, control=rpart.control(minsplit=2, minbucket=1, cp=0.0001))
-png(file = "/home/hasithagamage/decision_tree.png")
-rpart.plot(fit)
-dev.off()
+train_data <- read.table("/home/hasithagamage/cart_data.csv", header=TRUE, sep=",")
+cart_tree <- rpart(Profit ~ Duration  + Genres + Director.Name + Actor.Name + Country + Language + BudgetID, method="class", data=train_data, control=rpart.control(minsplit=2, minbucket=1, cp=0.0001))
+predict_data <- read.table("/home/hasithagamage/predict_data.csv", header=TRUE, sep=",")
+prediction_of_predict_data <- predict(cart_tree, predict_data, type="class")
+write.csv(prediction_of_predict_data, file = "/home/hasithagamage/predict_result.csv")
 
-testData <- read.table("/home/hasithagamage/predict_data.csv", header=TRUE, sep=",")
-str(testData)
-table(testData$isProfitable)
-h <- runif(nrow(testData))
-imdbres <- testData[order(h),]
-head(imdbres)
-p3 <- predict(fit, testData[1:1,], type="class")
-
-write.csv(p3, file = "/home/hasithagamage/predict_result.csv")

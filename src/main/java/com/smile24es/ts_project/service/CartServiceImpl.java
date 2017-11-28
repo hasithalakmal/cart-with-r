@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
@@ -126,8 +127,10 @@ public class CartServiceImpl implements CartService {
         pw.write(sb.toString());
         pw.close();
         try {
-            Runtime.getRuntime().exec("Rscript /home/hasithagamage/Hasitha/OtherProjects/GIT/cart-with-r/TestCart.R");
+            Process p = Runtime.getRuntime().exec("Rscript /home/hasithagamage/Hasitha/OtherProjects/GIT/cart-with-r/TestCart.R");
+            int exitVal = p.waitFor();
         } catch (IOException e) {
+        } catch (InterruptedException ex) {
         }
 
         readReasultCsv(cartResult);
